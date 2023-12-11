@@ -5,6 +5,9 @@ import Inventario from "../views/Inventario.vue";
 import Idioma from "../views/Idioma.vue";
 import origenIdioma from "../views/origenIdioma.vue";
 import TraduccionIdioma from "../views/TraduccionIdioma.vue"
+import Autores from "@/components/Autores.vue";
+import Generos from "@/components/Generos.vue";
+import Nacionalidades from "@/components/Nacionalidades.vue";
 
 
 const routes: Array<RouteRecordRaw> = [
@@ -37,6 +40,21 @@ const routes: Array<RouteRecordRaw> = [
     path: "/TraduccionIdioma",
     name: "TraduccionIdioma",
     component: TraduccionIdioma,
+  },
+  {
+    path: "/autor",
+    name: "autor",
+    component: Autores,
+  },
+  {
+    path: "/genero",
+    name: "genero",
+    component: Generos,
+  },
+  {
+    path: "/nacionalidad",
+    name: "nacionalidad",
+    component: Nacionalidades,
   },
   {
     path: "/about",
