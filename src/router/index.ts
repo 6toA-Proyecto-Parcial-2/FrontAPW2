@@ -4,10 +4,18 @@ import Encargado from "../views/Encargado.vue";
 import Inventario from "../views/Inventario.vue";
 import Idioma from "../views/Idioma.vue";
 import origenIdioma from "../views/origenIdioma.vue";
+<<<<<<< HEAD
 import TraduccionIdioma from "../views/TraduccionIdioma.vue";
 import Libro from "../views/Libro.vue";
 import Categoria from "../views/Categoria.vue";
 import Editorial from "../views/Editorial.vue";
+=======
+import TraduccionIdioma from "../views/TraduccionIdioma.vue"
+import Autores from "@/components/Autores.vue";
+import Generos from "@/components/Generos.vue";
+import Nacionalidades from "@/components/Nacionalidades.vue";
+
+>>>>>>> c293f1ca58b5a4d874a3976499ae9fd744cefe85
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -41,6 +49,7 @@ const routes: Array<RouteRecordRaw> = [
     component: TraduccionIdioma,
   },
   {
+<<<<<<< HEAD
     path: "/libros",
     name: "libro",
     component: Libro,
@@ -54,6 +63,21 @@ const routes: Array<RouteRecordRaw> = [
     path: "/editoriales",
     name: "editorial",
     component: Editorial,
+=======
+    path: "/autor",
+    name: "autor",
+    component: Autores,
+  },
+  {
+    path: "/genero",
+    name: "genero",
+    component: Generos,
+  },
+  {
+    path: "/nacionalidad",
+    name: "nacionalidad",
+    component: Nacionalidades,
+>>>>>>> c293f1ca58b5a4d874a3976499ae9fd744cefe85
   },
   {
     path: "/about",
