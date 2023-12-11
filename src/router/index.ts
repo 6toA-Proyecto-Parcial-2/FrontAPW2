@@ -4,8 +4,10 @@ import Encargado from "../views/Encargado.vue";
 import Inventario from "../views/Inventario.vue";
 import Idioma from "../views/Idioma.vue";
 import origenIdioma from "../views/origenIdioma.vue";
-import TraduccionIdioma from "../views/TraduccionIdioma.vue"
-
+import TraduccionIdioma from "../views/TraduccionIdioma.vue";
+import Libro from "../views/Libro.vue";
+import Categoria from "../views/Categoria.vue";
+import Editorial from "../views/Editorial.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -37,6 +39,21 @@ const routes: Array<RouteRecordRaw> = [
     path: "/TraduccionIdioma",
     name: "TraduccionIdioma",
     component: TraduccionIdioma,
+  },
+  {
+    path: "/libros",
+    name: "libro",
+    component: Libro,
+  },
+  {
+    path: "/categorias",
+    name: "categoria",
+    component: Categoria,
+  },
+  {
+    path: "/editoriales",
+    name: "editorial",
+    component: Editorial,
   },
   {
     path: "/about",

@@ -7,9 +7,9 @@
           class="form-select"
           aria-label="Default select example"
         >
-          <option value="">origenIdioma</option>
-          <option value="/">TraduccionIdioma</option>
-          <option value="/Idioma">Idioma</option>
+          <option value="">Idioma</option>
+          <option value="/">origenIdioma</option>
+          <option value="/TraduccionIdioma">TraduccionIdioma</option>
           <option value="#">Three</option>
         </select>
       </div>
@@ -17,27 +17,27 @@
         <form>
           <div class="row">
             <div class="col">
-              <label for="nombrepais" class="form-label"
-                ><b>Nombre del pais</b></label
+              <label for="nombreIdioma" class="form-label"
+                ><b>Nombre del Idioma</b></label
               >
               <input
                 type="text"
                 class="form-control"
-                id="nombrepais"
-                aria-describedby="nombrepais"
-                ref="nombrepais"
+                id="nombreIdioma"
+                aria-describedby="nombreIdioma"
+                ref="nombreIdioma"
               />
             </div>
             <div class="col">
-              <label for="idiomaoficial" class="form-label"
-                ><b>Nombre del Idioma Oficial</b></label
+              <label for="origenId" class="form-label"
+                ><b>Id del Origen</b></label
               >
               <input
                 type="text"
                 class="form-control"
-                id="idiomaoficial"
-                aria-describedby="idiomaoficial"
-                ref="idiomaoficial"
+                id="origenId"
+                aria-describedby="origenId"
+                ref="origenId"
               />
             </div>
           </div>
@@ -45,7 +45,7 @@
             <button
               type="submit"
               class="btn btn-success"
-              @click="agregarorigenIdioma"
+              @click="agregarIdioma"
             >
               Save
             </button>
@@ -59,29 +59,29 @@
         <form>
           <div class="row">
             <div class="col">
-              <label for="nombrepais" class="form-label"
-                ><b>Nombre del pais </b></label
+              <label for="nombreIdioma" class="form-label"
+                ><b>Nombre del Idioma</b></label
               >
               <input
-                v-if="origenIdiomaActual"
+                v-if="IdiomaActual"
                 type="text"
                 class="form-control"
-                id="nombrepais"
-                aria-describedby="nombrepais"
-                v-model="origenIdiomaActual.nombrepais"
+                id="nombreIdioma"
+                aria-describedby="nombreIdioma"
+                v-model="IdiomaActual.nombreidioma"
               />
             </div>
             <div class="col">
-              <label for="idiomaoficial" class="form-label"
-                ><b>Nombre del Idioma Oficial</b></label
+              <label for="origenId" class="form-label"
+                ><b>Id del Origen</b></label
               >
               <input
-                v-if="origenIdiomaActual"
+                v-if="IdiomaActual"
                 type="text"
                 class="form-control"
-                id="idiomaoficial"
-                aria-describedby="idiomaoficial"
-                v-model="origenIdiomaActual.idiomaoficial"
+                id="origenId"
+                aria-describedby="origenId"
+                v-model="IdiomaActual.origenId"
               />
             </div>
           </div>
@@ -100,30 +100,27 @@
         </form>
       </div>
       <div class="my-4">
-        <table class="table table-dark table-striped" v-if="origenIdiomas">
+        <table class="table table-dark table-striped" v-if="Idiomas">
           <thead>
             <tr>
               <th>Id</th>
-              <th>Nombre del pais</th>
-              <th>Idioma Oficial</th>
+              <th>Nombre de Idioma</th>
+              <th>Id del Origen</th>
               <th>Acciones</th>
             </tr>
           </thead>
-          <tbody v-if="origenIdiomas">
-            <tr v-for="origenIdioma in origenIdiomas" :key="origenIdioma.id">
-              <td>{{ origenIdioma.id }}</td>
-              <td>{{ origenIdioma.nombrepais }}</td>
-              <td>{{ origenIdioma.idiomaoficial }}</td>
+          <tbody v-if="Idiomas">
+            <tr v-for="Idioma in Idiomas" :key="Idioma.id">
+              <td>{{ Idioma.id }}</td>
+              <td>{{ Idioma.nombreidioma }}</td>
+              <td>{{ Idioma.origenId }}</td>
               <td>
-                <button
-                  class="btn btn-danger"
-                  @click="eliminar(origenIdioma.id)"
-                >
+                <button class="btn btn-danger" @click="eliminar(Idioma.id)">
                   Eliminar
                 </button>
                 <button
                   class="btn btn-info"
-                  @click="iniciarActualizacion(origenIdioma.id)"
+                  @click="iniciarActualizacion(Idioma.id)"
                 >
                   Actualizar
                 </button>
@@ -141,18 +138,18 @@
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
-import { IorigenIdioma } from "../Interface/IorigenIdioma";
+import { IIdioma } from "../Interface/IIdioma";
 import { Router } from "vue-router";
 
 @Options({
   props: {
-    origenIdioma: Array,
+    Idioma: Array,
   },
 })
 export default class Idioma extends Vue {
   mostrandoFormulario = false;
   actualizando = false;
-  origenIdiomaActual: IorigenIdioma | null = null;
+  IdiomaActual: IIdioma | null = null;
   $router!: Router;
   redireccionar(event: Event) {
     const selectedOption = (event.target as HTMLSelectElement).value;
@@ -160,7 +157,7 @@ export default class Idioma extends Vue {
       this.$router.push(selectedOption);
     }
   }
-  origenIdiomas: Array<IorigenIdioma> = [];
+  Idiomas: Array<IIdioma> = [];
 
   mounted() {
     this.fetchData();
@@ -168,13 +165,13 @@ export default class Idioma extends Vue {
 
   //Mostrar datos de la Base de datos
   fetchData() {
-    fetch("http://localhost:3000/api/origenes")
+    fetch("http://localhost:3000/api/Idioma")
       .then((response) => response.json())
-      .then((data: IorigenIdioma[] | undefined) => {
+      .then((data: IIdioma[] | undefined) => {
         // Verificar si data es undefined antes de intentar ordenar
         if (data) {
-          // Ordenar los origenes idiomas por ID
-          this.origenIdiomas = data.sort((a, b) => {
+          // Ordenar los idiomas por ID
+          this.Idiomas = data.sort((a, b) => {
             // Verificar que ambas instancias tengan la propiedad 'id' antes de restarlas
             if (a.id !== undefined && b.id !== undefined) {
               return a.id - b.id;
@@ -196,29 +193,29 @@ export default class Idioma extends Vue {
     this.mostrandoFormulario = true;
   }
   //Agregar Datos en la Base de datos
-  async agregarorigenIdioma() {
+  async agregarIdioma() {
     try {
-      const nombrepaisInput = this.$refs.nombrepais as HTMLInputElement;
-      const idiomaoficialInput = this.$refs.idiomaoficial as HTMLInputElement;
+      const nombreIdiomaInput = this.$refs.nombreIdioma as HTMLInputElement;
+      const origenIdInput = this.$refs.origenId as HTMLInputElement;
 
-      if (!nombrepaisInput || !idiomaoficialInput) {
+      if (!nombreIdiomaInput || !origenIdInput) {
         console.error(
           "Al menos uno de los campos del formulario no está presente."
         );
         return;
       }
 
-      const nombrepais = nombrepaisInput.value;
-      const idiomaoficial = idiomaoficialInput.value;
+      const nombreIdioma = parseInt(nombreIdiomaInput.value, 10);
+      const origenId = parseInt(origenIdInput.value, 10);
 
-      const response = await fetch("http://localhost:3000/api/origenes", {
+      const response = await fetch("http://localhost:3000/api/Idioma", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          nombrepais,
-          idiomaoficial,
+          nombreIdioma,
+          origenId: Number(origenId),
         }),
       });
 
@@ -227,72 +224,69 @@ export default class Idioma extends Vue {
 
       // Terminar la operación y recargar la página
       this.mostrandoFormulario = false;
-      //location.reload();
+      location.reload();
     } catch (error) {
-      console.error("Error al agregar el origenIdioma:", error);
+      console.error("Error al agregar el Idioma:", error);
     }
   }
 
   //Eliminar
   async eliminar(id: number | undefined) {
     try {
-      await fetch(`http://localhost:3000/api/origenes/${id}`, {
+      await fetch(`http://localhost:3000/api/Idioma/${id}`, {
         method: "DELETE",
       });
-      // Actualizar la lista de origen idioma después de eliminar
+      // Actualizar la lista de idioma después de eliminar
       this.fetchData();
     } catch (error) {
-      console.error("Error al eliminar el origenIdioma:", error);
+      console.error("Error al eliminar el Idioma:", error);
     }
   }
   iniciarActualizacion(id: number | undefined) {
     if (id !== undefined) {
       this.actualizando = true;
-      // Obtener datos del origen idioma para prellenar el formulario
-      this.obtenerorigenIdioma(id);
+      // Obtener datos del idioma para prellenar el formulario
+      this.obtenerIdioma(id);
     }
   }
 
-  async obtenerorigenIdioma(id: number) {
+  async obtenerIdioma(id: number) {
     try {
-      const response = await fetch(`http://localhost:3000/api/origenes/${id}`);
+      const response = await fetch(`http://localhost:3000/api/Idioma/${id}`);
       const data = await response.json();
-
-      // Verifica si el dato es numérico antes de cambiarlo a string
-      if (typeof data.nombrepais === "number") {
-        data.nombrepais = data.nombrepais.toString();
+      if (
+        typeof data.nombreIdioma === "string" &&
+        !isNaN(Number(data.nombreIdioma))
+      ) {
+        data.nombreIdioma = Number(data.nombreIdioma);
       }
-
-      this.origenIdiomaActual = data;
+      this.IdiomaActual = data;
     } catch (error) {
-      console.error("Error al obtener datos del origenIdioma:", error);
+      console.error("Error al obtener datos del Idioma:", error);
     }
   }
 
   async guardarActualizacion() {
-    if (this.origenIdiomaActual) {
-      const { id, nombrepais, idiomaoficial } = this.origenIdiomaActual;
+    if (this.IdiomaActual) {
+      const { id, nombreidioma, origenId } = this.IdiomaActual;
       try {
-        const response = await fetch(
-          `http://localhost:3000/api/origenes/${id}`,
-          {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              nombrepais,
-              idiomaoficial,
-            }),
-          }
-        );
+        const response = await fetch(`http://localhost:3000/api/Idioma/${id}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            nombreidioma,
+            origenId: Number(origenId),
+          }),
+        });
         const data = await response.json();
         console.log(data);
         // Terminar la actualización y recargar la página
         this.actualizando = false;
         location.reload();
       } catch (error) {
-        console.error("Error al actualizar el origenIdioma:", error);
+        console.error("Error al actualizar el Idioma:", error);
       }
     }
   }

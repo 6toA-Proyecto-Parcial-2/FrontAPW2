@@ -7,49 +7,46 @@
           class="form-select"
           aria-label="Default select example"
         >
-          <option value="">TraduccionIdioma</option>
-          <option value="/">origenIdioma</option>
-          <option value="/Idioma">Idioma</option>
-          <option value="#">Three</option>
+          <option value="">Categorias</option>
+          <option value="/editoriales">Editoriales</option>
+          <option value="/libros">Libros</option>
         </select>
       </div>
       <div v-if="mostrandoFormulario">
         <form>
           <div class="row">
             <div class="col">
-              <label for="numerotraduccion" class="form-label"
-                ><b>Numero de traduccion</b></label
+              <label for="nombreCategoria" class="form-label"
+                ><b>Nombre de la Categoria</b></label
               >
               <input
                 type="text"
                 class="form-control"
-                id="numerotraduccion"
-                aria-describedby="numerotraduccion"
-                ref="numerotraduccion"
+                id="nombreCategoria"
+                aria-describedby="nombreCategoria"
+                ref="nombreCategoria"
               />
             </div>
             <div class="col">
-              <label for="nombretraduccion" class="form-label"
-                ><b>Nombre de traduccion</b></label
+              <label for="CategoriaPrincipal" class="form-label"
+                ><b>Categoria Principal</b></label
               >
               <input
                 type="text"
                 class="form-control"
-                id="nombretraduccion"
-                aria-describedby="nombretraduccion"
-                ref="nombretraduccion"
+                id="CategoriaPrincipal"
+                aria-describedby="CategoriaPrincipal"
+                ref="CategoriaPrincipal"
               />
             </div>
             <div class="col">
-              <label for="ididioma" class="form-label"
-                ><b>Id del Idioma</b></label
-              >
+              <label for="librosId" class="form-label"><b>Libro Id</b></label>
               <input
                 type="text"
                 class="form-control"
-                id="ididioma"
-                aria-describedby="ididioma"
-                ref="ididioma"
+                id="librosId"
+                aria-describedby="librosId"
+                ref="librosId"
               />
             </div>
           </div>
@@ -57,7 +54,7 @@
             <button
               type="submit"
               class="btn btn-success"
-              @click="agregarTraduccionIdioma"
+              @click="agregarCategoria"
             >
               Save
             </button>
@@ -71,42 +68,40 @@
         <form>
           <div class="row">
             <div class="col">
-              <label for="numerotraduccion" class="form-label"
-                ><b>Numero de Traduccion</b></label
+              <label for="nombreCategoria" class="form-label"
+                ><b>Nombre de la Categoria</b></label
               >
               <input
-                v-if="TraduccionIdiomaActual"
+                v-if="categoriaActual"
                 type="text"
                 class="form-control"
-                id="numerotraduccion"
-                aria-describedby="numerotraduccion"
-                v-model="TraduccionIdiomaActual.numerotraduccion"
+                id="nombreCategoria"
+                aria-describedby="nombreCategoria"
+                v-model="categoriaActual.nombreCategoria"
               />
             </div>
             <div class="col">
-              <label for="nombretraduccion" class="form-label"
-                ><b>Nombre de traduccion</b></label
+              <label for="CategoriaPrincipal" class="form-label"
+                ><b>Categoria Principal</b></label
               >
               <input
-                v-if="TraduccionIdiomaActual"
+                v-if="categoriaActual"
                 type="text"
                 class="form-control"
-                id="nombretraduccion"
-                aria-describedby="nombretraduccion"
-                v-model="TraduccionIdiomaActual.nombretraduccion"
+                id="CategoriaPrincipal"
+                aria-describedby="CategoriaPrincipal"
+                v-model="categoriaActual.CategoriaPrincipal"
               />
             </div>
             <div class="col">
-              <label for="ididioma" class="form-label"
-                ><b>Id del Idioma</b></label
-              >
+              <label for="librosId" class="form-label"><b>Libro Id</b></label>
               <input
-                v-if="TraduccionIdiomaActual"
+                v-if="categoriaActual"
                 type="text"
                 class="form-control"
-                id="ididioma"
-                aria-describedby="ididioma"
-                v-model="TraduccionIdiomaActual.ididioma"
+                id="librosId"
+                aria-describedby="librosId"
+                v-model="categoriaActual.librosId"
               />
             </div>
           </div>
@@ -125,34 +120,29 @@
         </form>
       </div>
       <div class="my-4">
-        <table class="table table-dark table-striped" v-if="TraduccionIdiomas">
+        <table class="table table-dark table-striped" v-if="categorias">
           <thead>
             <tr>
               <th>Id</th>
-              <th>Numero de traducciones</th>
-              <th>Nombre de traducciones</th>
-              <th>Id del Idioma</th>
+              <th>Nombre de la Categoria</th>
+              <th>Categoria Principal</th>
+              <th>Libro Id</th>
               <th>Acciones</th>
             </tr>
           </thead>
-          <tbody v-if="TraduccionIdiomas">
-            <tr
-              v-for="TraduccionIdioma in TraduccionIdiomas"
-              :key="TraduccionIdioma.id"
-            >
-              <td>{{ TraduccionIdioma.id }}</td>
-              <td>{{ TraduccionIdioma.nombretraduccion }}</td>
-              <td>{{ TraduccionIdioma.ididioma }}</td>
+          <tbody v-if="categorias">
+            <tr v-for="categoria in categorias" :key="categoria.id">
+              <td>{{ categoria.id }}</td>
+              <td>{{ categoria.nombreCategoria }}</td>
+              <td>{{ categoria.CategoriaPrincipal }}</td>
+              <td>{{ categoria.librosId }}</td>
               <td>
-                <button
-                  class="btn btn-danger"
-                  @click="eliminar(TraduccionIdioma.id)"
-                >
+                <button class="btn btn-danger" @click="eliminar(categoria.id)">
                   Eliminar
                 </button>
                 <button
                   class="btn btn-info"
-                  @click="iniciarActualizacion(TraduccionIdioma.id)"
+                  @click="iniciarActualizacion(categoria.id)"
                 >
                   Actualizar
                 </button>
@@ -170,18 +160,18 @@
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
-import { ITraduccionIdioma } from "../Interface/ITraduccionIdioma";
+import { ICategoria } from "../Interface/ICategoria";
 import { Router } from "vue-router";
 
 @Options({
   props: {
-    TraduccionIdioma: Array,
+    categorias: Array,
   },
 })
-export default class Idioma extends Vue {
+export default class Categorias extends Vue {
   mostrandoFormulario = false;
   actualizando = false;
-  TraduccionIdiomaActual: ITraduccionIdioma | null = null;
+  categoriaActual: ICategoria | null = null;
   $router!: Router;
   redireccionar(event: Event) {
     const selectedOption = (event.target as HTMLSelectElement).value;
@@ -189,7 +179,7 @@ export default class Idioma extends Vue {
       this.$router.push(selectedOption);
     }
   }
-  TraduccionIdiomas: Array<ITraduccionIdioma> = [];
+  categorias: Array<ICategoria> = [];
 
   mounted() {
     this.fetchData();
@@ -197,13 +187,13 @@ export default class Idioma extends Vue {
 
   //Mostrar datos de la Base de datos
   fetchData() {
-    fetch("http://localhost:3000/api/TraduccionIdioma")
+    fetch("http://localhost:3000/api/categorias")
       .then((response) => response.json())
-      .then((data: ITraduccionIdioma[] | undefined) => {
+      .then((data: ICategoria[] | undefined) => {
         // Verificar si data es undefined antes de intentar ordenar
         if (data) {
-          // Ordenar los traducciones idiomas por ID
-          this.TraduccionIdiomas = data.sort((a, b) => {
+          // Ordenar los categorias por ID
+          this.categorias = data.sort((a, b) => {
             // Verificar que ambas instancias tengan la propiedad 'id' antes de restarlas
             if (a.id !== undefined && b.id !== undefined) {
               return a.id - b.id;
@@ -225,105 +215,124 @@ export default class Idioma extends Vue {
     this.mostrandoFormulario = true;
   }
   //Agregar Datos en la Base de datos
-  async agregarTraduccionIdioma() {
+  async agregarCategoria() {
     try {
-      const numerotraduccionInput = this.$refs
-        .numerotraduccion as HTMLInputElement;
-      const nombretraduccionInput = this.$refs
-        .nombretraduccion as HTMLInputElement;
-      const ididiomaInput = this.$refs.ididioma as HTMLInputElement;
+      const nombreCategoriaInput = this.$refs
+        .nombreCategoria as HTMLInputElement;
+      const CategoriaPrincipalInput = this.$refs
+        .CategoriaPrincipal as HTMLInputElement;
+      const librosIdInput = this.$refs.librosId as HTMLInputElement;
 
-      if (!numerotraduccionInput || !nombretraduccionInput || !ididiomaInput) {
+      if (!nombreCategoriaInput || !CategoriaPrincipalInput || !librosIdInput) {
         console.error(
           "Al menos uno de los campos del formulario no está presente."
         );
         return;
       }
 
-      const numerotraduccion = parseInt(numerotraduccionInput.value, 10);
-      const nombretraduccion = parseInt(nombretraduccionInput.value, 10);
-      const ididioma = parseInt(ididiomaInput.value, 10);
+      const nombreCategoria = nombreCategoriaInput.value;
+      const CategoriaPrincipal = CategoriaPrincipalInput.value;
+      const librosId = Number(librosIdInput.value);
+      const librosIdVerificado = await this.verificarlibrosId(librosId);
 
-      const response = await fetch(
-        "http://localhost:3000/api/TraduccionIdioma",
-        {
+      if (librosIdVerificado) {
+        // Si el correo está verificado, procede a agregar el negocio
+        const response = await fetch("http://localhost:3000/api/categorias", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            numerotraduccion: Number(numerotraduccion),
-            nombretraduccion,
-            ididioma: Number(ididioma),
+            nombreCategoria,
+            CategoriaPrincipal,
+            librosId: Number(librosId),
           }),
-        }
-      );
+        });
 
-      const data = await response.json();
-      console.log(data);
+        const data = await response.json();
+        console.log(data);
 
-      // Terminar la operación y recargar la página
-      this.mostrandoFormulario = false;
-      location.reload();
+        // Terminar la operación y recargar la página
+        this.mostrandoFormulario = false;
+        location.reload();
+      } else {
+        // Si el correo no está verificado, muestra una alerta
+        console.log("El libroId ya está registrado");
+      }
     } catch (error) {
-      console.error("Error al agregar la TraduccionIdioma:", error);
+      console.error("Error al agregar la categoria:", error);
     }
+  }
+
+  verificarlibrosId(libroid: number) {
+    const librosIdRegistrados = this.categorias.map(
+      (categoria) => categoria.librosId
+    );
+    const libroIdExiste = librosIdRegistrados.includes(libroid);
+
+    if (libroIdExiste) {
+      // El libroId ya está registrado
+      alert("El  libroId ya está registrado.");
+    } else {
+      // El correo no está registrado
+      alert("Registro Exitoso.");
+    }
+
+    // Devuelve true si el correo no existe y se puede proceder, false si ya existe.
+    return !libroIdExiste;
   }
 
   //Eliminar
   async eliminar(id: number | undefined) {
     try {
-      await fetch(`http://localhost:3000/api/TraduccionIdioma/${id}`, {
+      await fetch(`http://localhost:3000/api/categorias/${id}`, {
         method: "DELETE",
       });
-      // Actualizar la lista de idioma después de eliminar
+      // Actualizar la lista de categorias después de eliminar
       this.fetchData();
     } catch (error) {
-      console.error("Error al eliminar la TraduccionIdioma:", error);
+      console.error("Error al eliminar la categoria:", error);
     }
   }
   iniciarActualizacion(id: number | undefined) {
     if (id !== undefined) {
       this.actualizando = true;
-      // Obtener datos del idioma para prellenar el formulario
-      this.obtenerTraduccionIdioma(id);
+      // Obtener datos de la categoria para prellenar el formulario
+      this.obtenerCategoria(id);
     }
   }
 
-  async obtenerTraduccionIdioma(id: number) {
+  async obtenerCategoria(id: number) {
     try {
       const response = await fetch(
-        `http://localhost:3000/api/TraduccionIdioma/${id}`
+        `http://localhost:3000/api/categorias/${id}`
       );
       const data = await response.json();
-      if (
-        typeof data.nombretraduccion === "string" &&
-        !isNaN(Number(data.nombretraduccion))
-      ) {
-        data.nombretraduccion = Number(data.nombretraduccion);
+      if (typeof data.librosId === "string" && !isNaN(Number(data.librosId))) {
+        data.librosId = Number(data.librosId);
       }
-      this.TraduccionIdiomaActual = data;
+      this.categoriaActual = data;
     } catch (error) {
-      console.error("Error al obtener datos del TraduccionIdioma:", error);
+      console.error("Error al obtener datos del categoria:", error);
     }
   }
 
   async guardarActualizacion() {
-    if (this.TraduccionIdiomaActual) {
-      const { id, numerotraduccion, nombretraduccion, ididioma } =
-        this.TraduccionIdiomaActual;
+    if (this.categoriaActual) {
+      const { id, nombreCategoria, CategoriaPrincipal, librosId } =
+        this.categoriaActual;
       try {
         const response = await fetch(
-          `http://localhost:3000/api/TraduccionIdioma/${id}`,
+          `http://localhost:3000/api/categorias/${id}`,
           {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              numerotraduccion,
-              nombretraduccion,
-              ididioma: Number(ididioma),
+              nombreCategoria,
+              CategoriaPrincipal,
+              librosId: Number(librosId),
             }),
           }
         );
@@ -333,7 +342,7 @@ export default class Idioma extends Vue {
         this.actualizando = false;
         location.reload();
       } catch (error) {
-        console.error("Error al actualizar la  TraduccionIdioma:", error);
+        console.error("Error al actualizar la categoria:", error);
       }
     }
   }

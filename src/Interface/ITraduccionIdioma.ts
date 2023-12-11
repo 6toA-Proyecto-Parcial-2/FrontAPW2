@@ -1,8 +1,6 @@
 export interface ITraduccionIdioma {
-    id?: number;
-    numerotraduccion: number;
-    nombretraduccion: string;
-    ididioma: number;
-    
-  }
-  
+  id?: number;
+  numerotraduccion: number;
+  nombretraduccion: string;
+  ididioma: number;
+}
